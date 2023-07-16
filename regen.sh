@@ -67,6 +67,7 @@ update_wsl_commands () {
 
 UPDATED_WSL_COMMANDS_CONTENT=$(update_wsl_commands)
 printf "%s\n" "$UPDATED_WSL_COMMANDS_CONTENT" > "$WSL_COMMANDS"
+sed -i -e "s|$(basename "$BASE_COMMANDS_DIR")|$(basename "$WSL_COMMANDS_DIR")|g" "$WSL_COMMANDS"
 
 printf "done\n"
 printf "Generating %s..." "$WSL_COMMANDS_DIR"
