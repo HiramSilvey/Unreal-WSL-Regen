@@ -48,7 +48,7 @@ update_wsl_commands () {
     FILE=""
     IN_ARGS=false
     while IFS="" read -r p || [ -n "$p" ]; do
-        KEY=$(printf "%s" "$p" | awk -F ': ' '{print $1}' | xargs | sed 's/,*$//g' )
+        KEY=$(printf "%s" "$p" | awk -F ': ' '{print $1}' | xargs | sed 's/,*$//g')
         if [ "$KEY" = "file" ]; then
             FILE=$(printf "%s" "$p" | awk -F ': ' '{ print $2 }' | xargs | sed 's/,*$//g')
         elif [ "$KEY" = "]" ] && [ "$IN_ARGS" = true ]; then
@@ -65,7 +65,7 @@ update_wsl_commands () {
     done < "$WSL_COMMANDS"
 }
 
-UPDATED_WSL_COMMANDS_CONTENT=$(update_wsl_commands)
+UPDATED_WSL_COMMANDS_CONTENT=$(update_wsl_commands | sed 's/\([^,:]\) /\1\\\\\\\ /g')
 printf "%s\n" "$UPDATED_WSL_COMMANDS_CONTENT" > "$WSL_COMMANDS"
 sed -i -e "s|$(basename "$BASE_COMMANDS_DIR")|$(basename "$WSL_COMMANDS_DIR")|g" "$WSL_COMMANDS"
 
