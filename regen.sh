@@ -65,7 +65,7 @@ update_wsl_commands () {
     done < "$WSL_COMMANDS"
 }
 
-UPDATED_WSL_COMMANDS_CONTENT=$(update_wsl_commands | sed 's/\([^,:]\) /\1\\\\\\\ /g')
+UPDATED_WSL_COMMANDS_CONTENT=$(update_wsl_commands)
 printf "%s\n" "$UPDATED_WSL_COMMANDS_CONTENT" > "$WSL_COMMANDS"
 sed -i -e "s|$(basename "$BASE_COMMANDS_DIR")|$(basename "$WSL_COMMANDS_DIR")|g" "$WSL_COMMANDS"
 
